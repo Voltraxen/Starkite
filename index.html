@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starkite</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0e153a, #1a2a6c);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Loader */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0e153a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        #loader.fade-out {
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
+        }
+
+        #loader .circle-wrapper {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #loader .circle {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            animation: rotate 2s linear infinite;
+        }
+
+        #loader .circle:nth-child(2) {
+            width: 80px;
+            height: 80px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            animation: rotateReverse 2s linear infinite;
+        }
+
+        #loader .circle:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.5);
+            animation: rotate 1.5s linear infinite;
+        }
+
+        #loader span {
+            position: absolute;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 5px;
+            color: #ffffff;
+            animation: pulseText 1.5s infinite;
+        }
+
+        #loader p {
+            margin-top: 30px;
+            font-size: 16px;
+            color: #ffffff;
+            text-align: center;
+            animation: fadeInUp 2s ease-in-out;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes rotateReverse {
+            0% { transform: rotate(360deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        @keyframes pulseText {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: transparent;
+            z-index: 1000;
+            opacity: 0;
+            animation: fadeInDown 1s ease forwards;
+            animation-delay: 0.5s;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+
+        .menu-btn {
+            background-color: #ffffff;
+            color: #1a2a6c;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            background-color: #1a2a6c;
+            color: #ffffff;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            opacity: 0;
+            animation: fadeIn 2s ease forwards;
+            animation-delay: 1.5s;
+        }
+
+        .hero h1 {
+            font-size: 60px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            animation: slideInFromLeft 1.5s ease forwards;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            animation: slideInFromRight 1.5s ease forwards;
+        }
+
+        .scroll-down {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 40px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInFromLeft {
+            0% { transform: translateX(-100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideInFromRight {
+            0% { transform: translateX(100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader Section -->
+    <div id="loader">
+        <div class="circle-wrapper">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <span>Loading</span>
+        </div>
+        <p>Loading the future can take a bit of time, be patient.</p>
+    </div>
+
+    <!-- Main Content -->
+    <header class="header hidden">
+        <div class="logo">Starkite</div>
+        <nav>
+            <button class="menu-btn">Menu</button>
+        </nav>
+    </header>
+
+    <section class="hero hidden">
+        <h1>Unlock the Future</h1>
+        <p>We’re introducing the world to UGC through games & practical applications.</p>
+        <div class="scroll-down">SCROLL TO EXPLORE</div>
+    </section>
+
+    <script>
+        // Simulate loading with a 3-second delay and fade-out effect
+        window.addEventListener("load", function() {
+            setTimeout(function() {
+                const loader = document.getElementById("loader");
+                loader.classList.add("fade-out");
+                setTimeout(function() {
+                    loader.classList.add("hidden");
+                    document.querySelector(".header").classList.remove("hidden");
+                    document.querySelector(".hero").classList.remove("hidden");
+                }, 500); // Delay to allow the fade-out effect
+            }, 3000); // 3-second delay for the loading screen
+        });
+    </script>
+</body>
+</html>
